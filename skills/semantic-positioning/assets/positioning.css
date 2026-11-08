@@ -1,0 +1,299 @@
+/*
+  Positioning tokens documented in the semantic-positioning skill.
+  Import into the `utilities` cascade layer, which follows `components`:
+  @import './positioning.css' layer(utilities);
+*/
+
+.z1 { z-index:      1 }
+.z2 { z-index:      2 }
+.z3 { z-index:      3 }
+
+.z-1 { z-index:    -1 }
+
+.z0 {
+  z-index:          0;
+}
+
+.stick {
+  position:         sticky;
+}
+
+.fix {
+  position:         fixed;
+}
+
+.rel {
+  position:         relative;
+}
+
+.rel-to {
+  position:         absolute;
+}
+
+.t { top:           0 }
+.r { right:         0 }
+.b { bottom:        0 }
+.l { left:          0 }
+
+.top-left {
+  top:    0; left:  0;
+}
+
+.top-right {
+  top:    0; right: 0;
+}
+
+.bottom-right {
+  bottom: 0; right: 0;
+}
+
+.bottom-left {
+  bottom: 0; left: 0;
+}
+
+.fix.stretch-x {
+  inset-inline:     0;
+}
+
+.fix.stretch-y {
+  inset-block:      0;
+}
+
+.fix.stretch {
+  inset:            0;
+}
+
+.fixed-stretch {
+  position:         fixed;
+  inset:            0;
+}
+
+.full-width, :not(.fix).stretch-x {
+  width:            100%;
+}
+
+.full-height, :not(.fix).stretch-y {
+  height:           100%;
+}
+
+:not(.fix).stretch {
+  width:            100%;
+  height:           100%;
+}
+
+.content-x-start {
+  justify-content:  start;
+}
+
+.content-x-center {
+  justify-content:  center;
+}
+
+.content-x-end {
+  justify-content:  end;
+}
+
+.content-x--sp-btwn {
+  justify-content:  space-between;
+}
+
+.content-x--sp-around {
+  justify-content:  space-around;
+}
+
+.content-x--sp-evenly {
+  justify-content:  space-evenly;
+}
+
+.items-x-start {
+  justify-items:    start;
+}
+
+.items-x-center {
+  justify-items:    center;
+}
+
+.items-x-end {
+  justify-items:    end;
+}
+
+.content-y-start {
+  align-content:    start;
+}
+
+.content-y-center {
+  align-content:    center;
+}
+
+.content-y-end {
+  align-content:    end;
+}
+
+.content-y--sp-btwn {
+  align-content:    space-between;
+}
+
+.content-y--sp-around {
+  align-content:    space-around;
+}
+
+.content-y--sp-evenly {
+  align-content:    space-evenly;
+}
+
+.items-y-start {
+  align-items:      start;
+}
+
+.items-y-center {
+  align-items:      center;
+}
+
+.items-y-end {
+  align-items:      end;
+}
+/* m --> main axis */
+.content-m-start {
+  justify-content:  start;
+}
+
+.content-m-center {
+  justify-content:  center;
+}
+
+.content-m-end {
+  justify-content:  end;
+}
+
+.content-m--sp-btwn {
+  justify-content:  space-between;
+}
+
+.content-m--sp-around {
+  justify-content:  space-around;
+}
+
+.content-m--sp-evenly {
+  justify-content:  space-evenly;
+}
+
+/* c --> cross axis */
+.content-c-start {
+  align-content:    start;
+}
+
+.content-c-center {
+  align-content:    center;
+}
+
+.content-c-end {
+  align-content:    end;
+}
+
+.items-c-start {
+  align-items:      start;
+}
+
+.items-c-center {
+  align-items:      center;
+}
+
+.items-c-end {
+  align-items:      end;
+}
+
+.-x-start {
+  justify-self:     start;
+}
+
+.-x-center {
+  justify-self:     center;
+}
+
+.-x-end {
+  justify-self:     end;
+}
+
+.-y-start {
+  align-self:       start;
+}
+
+.-y-center {
+  align-self:       center;
+}
+
+.-y-end {
+  align-self:       end;
+}
+
+.-c-start {
+  align-self:       start;
+}
+
+.-c-center {
+  align-self:       center;
+}
+
+.-c-end {
+  align-self:       end;
+}
+
+.grid, .g, .one {
+  display:          grid;
+}
+
+.center, .items-xy-center {
+  display:          grid;
+  place-items:      center;
+}
+
+.content-center {
+  justify-content:  center;
+  align-content:    center;
+}
+
+.one > :where(:not(.cell-auto, .rel-to)) {
+  grid-area: 1 / 1;
+}
+
+.flex {
+  display:          flex;
+}
+
+.if {
+  display:          inline-flex;
+}
+
+.flex.wrap {
+  flex-wrap:        wrap;
+}
+
+.if.wrap {
+  flex-wrap:        wrap;
+}
+
+.flex.nowrap {
+  flex-wrap:        nowrap;
+}
+
+.if.nowrap {
+  flex-wrap:        nowrap;
+}
+
+.flex.center {
+  justify-content:  center;
+  align-items:      center;
+}
+
+.flex.col {
+  flex-direction:   column;
+}
+
+.flex.row {
+  flex-direction:   row;
+}
+
+.ch-center {
+  justify-self:     center;
+  align-self:       center;
+}

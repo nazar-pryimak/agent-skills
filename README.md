@@ -24,7 +24,7 @@ Add `--skill <name>` to install a single skill, or `--list` to see what is avail
 Use `component-css` and `semantic-positioning` together. Class lists follow a fixed order, with groups separated by double spaces: identity, placement, content layout, then utilities:
 
 ```html
-<div class="status-bar  __layout__ fix r b l  grid items-y-center"></div>
+<div class="status-bar  fix r b l  grid items-y-center"></div>
 ```
 
 They assume a project where:

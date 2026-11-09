@@ -10,17 +10,17 @@ Follow the semantic positioning pattern to make layout intent readable from the 
 Keep class groups in this order and omit any group an element does not need:
 
 1. Identity: the element's class. On a component root, this is the unique scope class, followed by any shared scope class, single-space separated (e.g., `dashboard panel`).
-2. Placement: `__layout__`, its bare `--variant` if any, then placement tokens (position, z-index, anchoring, self-alignment).
+2. Placement: `__layout__` and any bare `--variant` when the element has `__layout__` rules, then placement tokens (position, z-index, anchoring, self-alignment).
 3. Content: child layout tokens (`grid`, `flex`, and child alignment).
 4. Utilities: non-positioning classes (color, text, etc.).
 
 Separate groups with a double space by default. Use a newline instead when it makes a long class list clearer. Tokens within a group are single-space separated.
 
 ## `__layout__`
-- Add `__layout__` to any element with layout tokens in its class list or layout rules in its component CSS. An inline `style` alone does not need it.
-- It has no global CSS. It marks the element's layout and selects its component layout rules (e.g., `div.entry.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }`).
-- Use tokens when one exists. Otherwise use an inline `style`, so the layout stays readable from the HTML.
-- Use `__layout__` rules only when an inline `style` can't do the job or would be too long: responsive changes (including the base value they change), states, descendant targeting, values a variant or parent overrides, or a larger block of layout.
+- Write layout with tokens where one exists and the rest in an inline `style`, including grid templates of any length, so the markup shows the element's whole layout.
+- Move layout into component CSS only when an inline `style` cannot express it: media and container queries, together with the base values they change (an inline value would override the query); states and pseudo-classes; styling children or descendants; and values a variant or a parent overrides.
+- Write that CSS as `__layout__` rules on the element (e.g., `div.entry.__layout__ { … }`) and add `__layout__` to its class list. The class has no global CSS: it says the element's layout continues in the stylesheet, so elements without `__layout__` rules do not get it.
+- In component CSS, layout properties go only in `__layout__` rules, never in the element's other rules: `display`, `position` and inset, `z-index`, sizing (`width`, `height` and their min/max), spacing (`margin`, `padding`, `gap`), grid and flex properties, and alignment (`align-*`, `justify-*`, `place-*`).
 - Keep `__layout__` rules for layout only; do not attach visual styling to them.
 
 ## Positioning rules
@@ -65,29 +65,39 @@ Aliases behave exactly like their token. New markup uses the token; leave existi
 | `col` | `column` |
 
 ## Examples
-Placement and content groups on the same line:
+A central element with its grid template inline. It keeps `__layout__ --wide` because a shared panel rule reads the variant:
 
 ```html
-<div class="dashboard panel  __layout__ --wide  g content-x-center content-y--sp-evenly"></div>
+<div
+  class="dashboard panel  __layout__ --wide  g content-x-center content-y--sp-evenly"
+  style="
+    grid-template-rows:
+      [toolbar] min-content
+      [status ] min-content
+      [content] minmax(0, auto);
+    grid-template-columns: minmax(0, var(--content-max-width));
+    gap: .4rem; padding: .5rem;
+  "
+>...</div>
 ```
 
 Identity on its own line for a long class list:
 
 ```html
 <div class="status-bar
-           __layout__ fix r b l  grid items-y-center"></div>
+           fix r b l  grid items-y-center"></div>
 ```
 
-Markup with its component CSS, from a Vue single-file component:
+Markup with its component CSS, from a Vue single-file component. Only `entry` gets `__layout__`: its columns change at 640px, so their base value sits in the same CSS, where the query can override it.
 
 ```vue
 <template>
   <nav
-    class="account-exit-links  __layout__  grid content-y-start"
+    class="account-exit-links  grid content-y-start"
     style="gap: 0; max-width: 44rem; padding-top: 1.25rem"
   >
     <div class="entry  __layout__  grid items-y-center" style="gap: 0.6rem 1.5rem; padding-block: 1rem">
-      <div class="description  __layout__  grid" style="gap: 0.35rem">...</div>
+      <div class="description  grid" style="gap: 0.35rem">...</div>
     </div>
   </nav>
 </template>
@@ -96,8 +106,8 @@ Markup with its component CSS, from a Vue single-file component:
 @layer components {
 @scope (.account-exit-links) {
 :scope { border-top: 1px solid var(--color-border-soft); }
-div.entry.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
 div.entry + div.entry { border-top: 1px solid var(--color-border-section); }
+div.entry.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
 
 @media (max-width: 640px) {
   div.entry.__layout__ { grid-template-columns: minmax(0, 1fr); }
@@ -109,4 +119,4 @@ div.entry + div.entry { border-top: 1px solid var(--color-border-section); }
 
 ## Trigger examples
 - "Update this component markup to follow the semantic positioning class pattern."
-- "Use __layout__ hooks and placement tokens in the template for this panel."
+- "Move this panel's layout into the markup with positioning tokens and inline styles."

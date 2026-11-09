@@ -2,7 +2,15 @@
 
 **Layout in the markup. Looks in the CSS.**
 
-Two skills that give coding agents a CSS house style built on modern browser features. Layout stays readable in the markup through ordered class groups and a small set of positioning tokens. Visual styling lives in plain component CSS, scoped with `@layer` and `@scope` instead of BEM, prefixes or framework-scoped styles. They work with Claude Code, Codex, Cursor and other coding agents that support the `SKILL.md` format.
+Two skills that give coding agents a CSS house style built on modern browser features, for projects that prefer native CSS over Tailwind or other utility frameworks. They:
+
+- separate layout from styling, keeping layout in the HTML and looks in the CSS
+- make class lists readable at a glance: what an element is, where it sits, how it lays out its children
+- use a small set of positioning classes for the usual cases, with anything bigger kept custom
+- scope component styles with native `@scope` and `@layer`, so class names stay plain: no BEM, prefixes or generated names
+- keep your coding agent consistent, instead of it inventing a new convention in every component
+
+They work with Claude Code, Codex, Cursor and other coding agents that support the `SKILL.md` format.
 
 | Skill | Covers |
 |---|---|

@@ -65,20 +65,20 @@ Aliases behave exactly like their token. New markup uses the token; leave existi
 | `col` | `column` |
 
 ## Examples
-A central element with its grid template inline. It keeps `__layout__ --wide` because a shared panel rule reads the variant:
+A central element with its grid template inline. Nothing overrides it, so it does not need `__layout__`:
 
 ```html
-<div
-  class="dashboard panel  __layout__ --wide  g content-x-center content-y--sp-evenly"
+<main
+  class="page  grid content-x-center"
   style="
     grid-template-rows:
-      [toolbar] min-content
-      [status ] min-content
-      [content] minmax(0, auto);
-    grid-template-columns: minmax(0, var(--content-max-width));
-    gap: .4rem; padding: .5rem;
+      [header ] min-content
+      [content] minmax(0, 1fr)
+      [footer ] min-content;
+    grid-template-columns: minmax(0, 72rem);
+    gap: 1rem; padding: 1rem;
   "
->...</div>
+>...</main>
 ```
 
 Identity on its own line for a long class list:
@@ -88,29 +88,26 @@ Identity on its own line for a long class list:
            fix r b l  grid items-y-center"></div>
 ```
 
-Markup with its component CSS, from a Vue single-file component. Only `entry` gets `__layout__`: its columns change at 640px, so their base value sits in the same CSS, where the query can override it.
+A Vue single-file component where only `row` gets `__layout__`: its columns change at 640px, so their base value sits in the same CSS, where the query can override it.
 
 ```vue
 <template>
-  <nav
-    class="account-exit-links  grid content-y-start"
-    style="gap: 0; max-width: 44rem; padding-top: 1.25rem"
-  >
-    <div class="entry  __layout__  grid items-y-center" style="gap: 0.6rem 1.5rem; padding-block: 1rem">
-      <div class="description  grid" style="gap: 0.35rem">...</div>
-    </div>
-  </nav>
+  <ul class="settings-list  grid">
+    <li class="row  __layout__  grid items-y-center" style="gap: 0.5rem 1.5rem; padding-block: 0.75rem">
+      <div class="label  grid" style="gap: 0.25rem">...</div>
+      <button class="action">...</button>
+    </li>
+  </ul>
 </template>
 
 <style>
 @layer components {
-@scope (.account-exit-links) {
-:scope { border-top: 1px solid var(--color-border-soft); }
-div.entry + div.entry { border-top: 1px solid var(--color-border-section); }
-div.entry.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
+@scope (.settings-list) {
+li.row + li.row { border-top: 1px solid var(--color-border); }
+li.row.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
 
 @media (max-width: 640px) {
-  div.entry.__layout__ { grid-template-columns: minmax(0, 1fr); }
+  li.row.__layout__ { grid-template-columns: minmax(0, 1fr); }
 }
 }
 }

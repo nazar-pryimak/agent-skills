@@ -4,7 +4,7 @@ description: Apply the semantic positioning class pattern (ordered class groups,
 license: MIT
 ---
 
-Follow the semantic positioning pattern to make layout intent readable from the HTML. Use it together with `component-design`, which owns component CSS and naming.
+Follow the semantic positioning pattern to make layout intent readable from the HTML. Use it together with `component-css`, which owns component CSS and naming.
 
 ## Class order
 Keep class groups in this order and omit any group an element does not need:
@@ -30,6 +30,8 @@ Separate groups with a double space by default. Use a newline instead when it ma
 - Inline styles are for layout and one-off spacing only. Visual styling goes in component CSS.
 
 ## Tokens
+Tokens cover common placement and alignment, plus small patterns composed from them, such as `one`. Larger arrangements, such as multi-track grids, stay custom in an inline `style` or `__layout__` rules.
+
 Use the project's positioning utilities, at the path named in its agent instructions (e.g., `AGENTS.md`); otherwise find the stylesheet that defines these tokens. This skill's `assets/positioning.css` defines the set below. If the project has none, propose adding it to the project's `utilities` cascade layer; where the project's copy differs, follow it. Ask before adding or reinterpreting utilities.
 
 | Purpose | Tokens | Notes |

@@ -1,5 +1,5 @@
 ---
-name: component-design
+name: component-css
 description: Apply component structure, class naming, and selector conventions built on @layer components and @scope. Use when designing or refactoring component markup and styles in a project that follows these conventions or asks for them.
 license: MIT
 ---
@@ -54,4 +54,4 @@ These conventions do not suit CSS Modules, CSS-in-JS or Shadow DOM components: g
 
 ## Trigger examples
 - "Refactor this component to use plain class names and scoped selectors."
-- "Adjust the component styles to follow the component-design conventions."
+- "Adjust the component styles to follow the component-css conventions."

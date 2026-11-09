@@ -35,16 +35,32 @@ Use the project's positioning utilities, at the path named in its agent instruct
 | Purpose | Tokens | Notes |
 |---|---|---|
 | Position | `rel`, `rel-to`, `fix`, `stick` | `rel-to` is `position: absolute`, for an element positioned relative to a `rel` ancestor. |
-| Anchors | `t`, `r`, `b`, `l`, `top-left`, `top-right`, `bottom-left`, `bottom-right` | |
-| Size and inset | `stretch`, `stretch-x`, `stretch-y`, `full-width`, `full-height`, `fixed-stretch` | With `fix`, `stretch` sets inset; otherwise it sets 100% width and height. |
+| Anchors | `t`, `r`, `b`, `l`, `top-left`, `top-right`, `bottom-left`, `bottom-right`, `inset0` | `inset0` sets all four sides to `0`. |
+| Size and inset | `stretch`, `stretch-x`, `stretch-y`, `full-width`, `full-height`, `fixed-stretch`, `fixed-stretch-x`, `fixed-stretch-y` | With `fix`, `stretch` sets inset; otherwise it sets 100% width and height. Each `fixed-stretch` token equals `fix` plus the matching `stretch` token. |
 | Stacking | `z-1`, `z0`, `z1`, `z2`, `z3` | |
-| Display | `grid` or `g`, `one`, `flex`, `if` | `flex` and `if` accept `wrap`, `nowrap`; `flex` also accepts `col`, `row`. |
+| Display | `grid` or `g`, `one`, `cell-one`, `flex`, `if` | `one` stacks its children in the first grid cell; `cell-one` puts a single element there. `flex` and `if` accept `wrap`, `nowrap`; `flex` also accepts `col`, `row`. |
 | Centering | `center`, `items-xy-center`, `content-center`, `ch-center` | `center` and `items-xy-center` set `display: grid`; `flex center` stays flex. |
 | Grid child alignment | `items-x-*`, `items-y-*`, `content-x-*`, `content-y-*` | |
 | Flex child alignment | `items-c-*`, `content-m-*`, `content-c-*` | `m` is the main axis and `c` is the cross axis, so they stay correct in column layouts. Prefer them on new `flex` markup. |
 | Self-alignment | `-x-*`, `-y-*`, `-c-*` | Sets the element's own alignment; belongs in the placement group. |
 
-Alignment suffixes are `start`, `center`, and `end`. `content-x`, `content-y`, and `content-m` also accept `--sp-btwn`, `--sp-around`, and `--sp-evenly`.
+Alignment suffixes are `start`, `center`, and `end`. `content-x`, `content-y`, and `content-m` also accept `--sp-btwn`, `--sp-around`, and `--sp-evenly`; `content-y` accepts `stretch` as well.
+
+Aliases behave exactly like their token. New markup uses the token; leave existing aliases as they are.
+
+| Token | Aliases |
+|---|---|
+| `rel` | `relative`, `anchor` |
+| `rel-to` | `abs`, `absolute` |
+| `fix` | `fixed` |
+| `stick` | `sticky` |
+| `b` | `b0` |
+| `inset0` | `tlbr` |
+| `full-width` | `width100`, `w100` |
+| `full-height` | `height100`, `h100` |
+| `grid` | `gap`, `block-fix` |
+| `items-xy-center` | `items-center` |
+| `col` | `column` |
 
 ## Examples
 Placement and content groups on the same line:

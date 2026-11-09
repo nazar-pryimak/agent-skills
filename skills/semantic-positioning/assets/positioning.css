@@ -10,23 +10,27 @@
 
 .z-1 { z-index:    -1 }
 
+.b0 {
+  bottom:           0;
+}
+
 .z0 {
   z-index:          0;
 }
 
-.stick {
+.stick, .sticky {
   position:         sticky;
 }
 
-.fix {
+.fix, .fixed {
   position:         fixed;
 }
 
-.rel {
+.rel, .relative, .anchor {
   position:         relative;
 }
 
-.rel-to {
+.rel-to, .abs, .absolute {
   position:         absolute;
 }
 
@@ -51,16 +55,26 @@
   bottom: 0; left: 0;
 }
 
-.fix.stretch-x {
+.fix.stretch-x, .fixed.stretch-x {
   inset-inline:     0;
 }
 
-.fix.stretch-y {
+.fix.stretch-y, .fixed.stretch-y {
   inset-block:      0;
 }
 
-.fix.stretch {
+.inset0, .tlbr, .fix.stretch, .fixed.stretch {
   inset:            0;
+}
+
+.fixed-stretch-x {
+  position:         fixed;
+  inset-inline:     0;
+}
+
+.fixed-stretch-y {
+  position:         fixed;
+  inset-block:      0;
 }
 
 .fixed-stretch {
@@ -68,15 +82,15 @@
   inset:            0;
 }
 
-.full-width, :not(.fix).stretch-x {
+.full-width, .width100, .w100, :not(.fix, .fixed).stretch-x {
   width:            100%;
 }
 
-.full-height, :not(.fix).stretch-y {
+.full-height, .height100, .h100, :not(.fix, .fixed).stretch-y {
   height:           100%;
 }
 
-:not(.fix).stretch {
+:not(.fix, .fixed).stretch {
   width:            100%;
   height:           100%;
 }
@@ -131,6 +145,10 @@
 
 .content-y--sp-btwn {
   align-content:    space-between;
+}
+
+.content-y-stretch {
+  align-content:    stretch;
 }
 
 .content-y--sp-around {
@@ -238,11 +256,15 @@
   align-self:       end;
 }
 
-.grid, .g, .one {
+.grid, .g, .one, .gap {
   display:          grid;
 }
 
-.center, .items-xy-center {
+.block-fix {
+  display:          grid;
+}
+
+.center, .items-center, .items-xy-center {
   display:          grid;
   place-items:      center;
 }
@@ -252,7 +274,8 @@
   align-content:    center;
 }
 
-.one > :where(:not(.cell-auto, .rel-to)) {
+.one > :where(:not(.cell-auto, .rel-to, .abs, .absolute)),
+.cell-one {
   grid-area: 1 / 1;
 }
 
@@ -285,7 +308,7 @@
   align-items:      center;
 }
 
-.flex.col {
+.flex.col, .flex.column {
   flex-direction:   column;
 }
 

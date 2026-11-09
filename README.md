@@ -29,8 +29,10 @@ They assume a project where:
 
 - Global CSS is organized in cascade layers with `components` before `utilities`, e.g. `@layer theme, base, framework, components, utilities, overrides;`.
 - The positioning tokens are in the `utilities` layer: copy `positioning.css` into the project and import it with `@import './positioning.css' layer(utilities);`.
-- Component styles are non-scoped `<style>` blocks wrapped in `@layer components` and `@scope`. The skills were written for Vue single-file components.
-- Target browsers support cascade layers and `@scope`.
+- Component styles are global CSS wrapped in `@layer components` and `@scope`. The skills were written for and used with Vue single-file components; `component-design` lists the equivalents for Astro, Svelte, React-style frameworks, Angular and server templates.
+- Target browsers support cascade layers and `@scope` (Chrome and Edge 118, Safari 17.4, Firefox 146). A browser without `@scope` drops component styles entirely; the positioning tokens still work.
+
+They are not a good fit for projects built on Tailwind or another utility framework (two vocabularies, some clashing names), CSS Modules or CSS-in-JS (generated class names), or Shadow DOM components (styles cannot cross the shadow boundary).
 
 Name the project's files in its agent instructions (`AGENTS.md` or `CLAUDE.md`) so the skills can find them, for example:
 

@@ -11,7 +11,7 @@ The project's agent instructions (e.g., `AGENTS.md`) normally name its theme tok
 ## Scoping and naming
 - Use a unique root class per component and anchor `@scope` to it.
 - Reusing child class names across components is acceptable because `@scope` keeps a component's styles from reaching the rest of the page.
-- Styles intentionally reach nested child components, which is why `<style>` is not `scoped`. A child overrides a parent rule by declaring the same property with the same selector shape, because the closer scope wins a specificity tie.
+- Styles intentionally reach nested child components, which is why component CSS is not scoped by the framework (see Framework notes). A child overrides a parent rule by declaring the same property with the same selector shape, because the closer scope wins a specificity tie.
 - Prefer plain, descriptive class names for internal elements (e.g., `inputs`, `input`, `close`).
 - Do not name classes after global utilities or positioning tokens (e.g., `empty`, `mono`, `center`). The `utilities` layer overrides `components` regardless of specificity, so component CSS cannot override what the utility sets.
 - BEM is optional; use it only when it improves clarity for a complex component.
@@ -20,7 +20,7 @@ The project's agent instructions (e.g., `AGENTS.md`) normally name its theme tok
 - Avoid project-wide prefixes for component classes; rely on the root scope instead.
 
 ## Component CSS
-- Use non-scoped `<style>` blocks with `@layer components` and `@scope`.
+- Write component CSS as global CSS wrapped in `@layer components` and `@scope`, placed as the Framework notes describe.
 - Style the component root with `:scope`.
 - Prefer tag + class selectors to make targets obvious (e.g., `div.input`, `button.close`).
 - Keep selectors shallow so a child can still override them with the same selector shape.
@@ -40,6 +40,17 @@ The project's agent instructions (e.g., `AGENTS.md`) normally name its theme tok
 ## Global CSS
 - Global CSS lives in cascade layers declared in the project's CSS entry point, with `components` before `utilities` (e.g., `@layer theme, base, framework, components, utilities, overrides;`).
 - Do not add unlayered global rules; put each rule in the layer it belongs to.
+
+## Framework notes
+Keep component CSS global, where the framework does not rewrite or isolate it:
+- Vue: a `<style>` block without `scoped`.
+- Astro: `<style is:global>`.
+- Svelte: a plain `.css` file imported as global CSS, since Svelte scopes `<style>` blocks.
+- React, Preact, Solid and similar: a plain `.css` file per component, imported as global CSS rather than a CSS Module. Classes go in `className`, and inline layout styles are style objects.
+- Angular: component styles with `encapsulation: ViewEncapsulation.None`.
+- Server templates and plain HTML: a `.css` file per partial or component.
+
+These conventions do not suit CSS Modules, CSS-in-JS or Shadow DOM components: generated class names and shadow boundaries break the root class, shared child names and rules that reach child components.
 
 ## Trigger examples
 - "Refactor this component to use plain class names and scoped selectors."

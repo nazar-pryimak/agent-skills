@@ -1,6 +1,8 @@
 # Agent Skills
 
-Skills for Claude Code, Codex, and other coding agents that support the `SKILL.md` format.
+**Layout in the markup. Looks in the CSS.**
+
+Two skills that give coding agents a CSS house style built on modern browser features. Layout stays readable in the markup through ordered class groups and a small set of positioning tokens. Visual styling lives in plain component CSS, scoped with `@layer` and `@scope` instead of BEM, prefixes or framework-scoped styles. They work with Claude Code, Codex, Cursor and other coding agents that support the `SKILL.md` format.
 
 | Skill | Covers |
 |---|---|
@@ -19,7 +21,7 @@ Add `--skill <name>` to install a single skill, or `--list` to see what is avail
 
 ## Using the UI skills
 
-`component-design` and `semantic-positioning` work as a pair: component CSS holds visual styling, while layout stays readable from the markup as ordered class groups (identity, placement, content, utilities):
+Use `component-design` and `semantic-positioning` together. Class lists follow a fixed order, with groups separated by double spaces: identity, placement, content layout, then utilities:
 
 ```html
 <div class="status-bar  __layout__ fix r b l  grid items-y-center"></div>

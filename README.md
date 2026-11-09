@@ -35,6 +35,34 @@ Use `component-css` and `semantic-positioning` together. Class lists follow a fi
 <div class="status-bar  fix r b l  grid items-y-center"></div>
 ```
 
+A component with its CSS, where only `row` needs `__layout__` because its columns change at 640px:
+
+```vue
+<template>
+  <ul class="settings-list  grid">
+    <li class="row  __layout__  grid items-y-center" style="gap: 0.5rem 1.5rem; padding-block: 0.75rem">
+      <div class="label  grid" style="gap: 0.25rem">...</div>
+      <button class="action">...</button>
+    </li>
+  </ul>
+</template>
+
+<style>
+@layer components {
+@scope (.settings-list) {
+li.row + li.row { border-top: 1px solid var(--color-border); }
+li.row.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
+
+@media (max-width: 640px) {
+  li.row.__layout__ { grid-template-columns: minmax(0, 1fr); }
+}
+}
+}
+</style>
+```
+
+For a fuller component, see the [examples in `semantic-positioning`](skills/semantic-positioning/SKILL.md#examples).
+
 They assume a project where:
 
 - Global CSS is organized in cascade layers with `components` before `utilities`, e.g. `@layer theme, base, framework, components, utilities, overrides;`.

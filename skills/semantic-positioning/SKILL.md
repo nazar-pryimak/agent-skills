@@ -114,6 +114,66 @@ li.row.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
 </style>
 ```
 
+A fuller component that combines the rules:
+
+```vue
+<template>
+  <section
+    class="gallery  grid"
+    :class="{ 'gallery--dense': dense }"
+    style="
+      grid-template-rows:
+        [header] min-content
+        [items ] minmax(0, 1fr);
+      gap: 0.75rem;
+    "
+  >
+    <header class="toolbar  stick t z2  flex items-c-center content-m--sp-btwn" style="padding-block: 0.5rem">
+      <h2 class="title">Photos</h2>
+      <span class="count  mono">{{ items.length }} items</span>
+    </header>
+
+    <ul class="items  __layout__  grid">
+      <li v-for="item in items" :key="item.id" class="item  rel  one">
+        <img class="thumb" :src="item.src" alt="" />
+        <div class="caption  __layout__ -y-end  grid" style="padding: 0.5rem">
+          <strong class="name">{{ item.name }}</strong>
+          <p class="details">{{ item.details }}</p>
+        </div>
+        <button class="remove  rel-to t r z1" aria-label="Remove" style="margin: 0.25rem">×</button>
+      </li>
+    </ul>
+  </section>
+</template>
+
+<style>
+@layer components {
+@scope (.gallery) {
+header.toolbar { background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+div.caption { background: var(--color-overlay); color: var(--color-on-overlay); }
+p.details { overflow: hidden; }
+
+ul.items.__layout__ { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+:scope.gallery--dense ul.items.__layout__ { gap: 0.25rem; }
+
+div.caption.__layout__ { grid-template-rows: min-content 0fr; }
+li.item:is(:hover, :focus-within) div.caption.__layout__ { grid-template-rows: min-content 1fr; }
+
+@media (max-width: 720px) {
+  ul.items.__layout__ { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+}
+}
+</style>
+```
+
+- `section.gallery` keeps its row template inline: it is the central layout and nothing overrides it, so it does not need `__layout__`.
+- `ul.items` has `__layout__` because its columns change at 720px and its gap changes with `gallery--dense`, so both base values live in CSS.
+- `div.caption` has `__layout__` because its second row opens on hover or focus, a state that inline styles cannot express.
+- `li.item` stacks the image and caption in one cell with `one`; `-y-end` pins the caption to the bottom, and `rel-to t r z1` takes the remove button out of the cell into the top-right corner of the `rel` item.
+- `header.toolbar` sticks to the top with `stick t z2`, above the buttons' `z1`, and spreads its children with main-axis flex tokens.
+- Visual styling stays in plain rules that use theme tokens by role; `mono` stands for a project text utility in the last class group.
+
 ## Trigger examples
 - "Update this component markup to follow the semantic positioning class pattern."
 - "Move this panel's layout into the markup with positioning tokens and inline styles."

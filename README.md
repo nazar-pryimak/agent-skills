@@ -14,7 +14,7 @@ It works with Claude Code, Codex, Cursor and other coding agents that support th
 
 | Skill | Covers |
 |---|---|
-| [`semantic-positioning`](skills/semantic-positioning/SKILL.md) | Class order, positioning tokens and `__layout__` hooks that keep layout readable from the markup, plus component CSS in `@layer components` and `@scope` with plain class names and theme tokens. The tokens ship as [`positioning.css`](skills/semantic-positioning/assets/positioning.css). |
+| [`semantic-first-css`](skills/semantic-first-css/SKILL.md) | Class order, positioning tokens and `__layout__` hooks that keep layout readable from the markup, plus component CSS in `@layer components` and `@scope` with plain class names and theme tokens. The tokens ship as [`positioning.css`](skills/semantic-first-css/assets/positioning.css). |
 
 ## Install
 
@@ -26,7 +26,7 @@ npx skills add nazar-pryimak/agent-skills
 
 Add `--skill <name>` to install a single skill, or `--list` to see what is available. You can also copy a skill's folder into your agent's skills directory, such as `.claude/skills/` for Claude Code.
 
-## Using `semantic-positioning`
+## Using `semantic-first-css`
 
 Class lists follow a fixed order, with groups separated by double spaces: identity, placement, content layout, then utilities:
 
@@ -60,7 +60,7 @@ li.row.__layout__ { grid-template-columns: minmax(0, 1fr) max-content; }
 </style>
 ```
 
-For a fuller component, see the [examples in `semantic-positioning`](skills/semantic-positioning/SKILL.md#examples).
+For a fuller component, see the [examples in `semantic-first-css`](skills/semantic-first-css/SKILL.md#examples).
 
 It assumes a project where:
 
@@ -74,7 +74,7 @@ It is not a good fit for projects built on Tailwind or another utility framework
 Name the project's files in its agent instructions (`AGENTS.md` or `CLAUDE.md`) so the skill can find them, for example:
 
 ```md
-Use `semantic-positioning` for UI work. Positioning utilities: `src/styles/positioning.css`. Theme tokens: `src/styles/theme.css`, with role rules in `docs/theme.md`. Cascade layers: `src/styles/main.css`.
+Use `semantic-first-css` for UI work. Positioning utilities: `src/styles/positioning.css`. Theme tokens: `src/styles/theme.css`, with role rules in `docs/theme.md`. Cascade layers: `src/styles/main.css`.
 ```
 
 ## License

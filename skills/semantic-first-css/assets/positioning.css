@@ -1,5 +1,5 @@
 /*
-  Positioning tokens documented in the semantic-positioning skill.
+  Positioning tokens documented in the semantic-first-css skill.
   Import into the `utilities` cascade layer, which follows `components`:
   @import './positioning.css' layer(utilities);
 */

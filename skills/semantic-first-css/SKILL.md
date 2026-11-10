@@ -1,10 +1,10 @@
 ---
-name: semantic-positioning
-description: Apply the semantic positioning pattern to components (ordered class groups, positioning tokens and __layout__ hooks in the markup; plain class names and component CSS in @layer and @scope). Use when writing, reviewing or refactoring component markup and styles in a project that follows this pattern or asks for it.
+name: semantic-first-css
+description: Apply semantic-first CSS to components (the semantic positioning pattern in the markup, with ordered class groups, positioning tokens and __layout__ hooks; plain class names and component CSS in @layer and @scope). Use when writing, reviewing or refactoring component markup and styles in a project that follows this pattern or asks for it.
 license: MIT
 ---
 
-Follow the semantic positioning pattern: keep layout readable in the markup through ordered class groups, positioning tokens and inline styles, and keep visual styling in plain component CSS scoped with `@layer` and `@scope`.
+Write semantic-first CSS: each element's class says what it is first. Layout stays readable in the markup through the semantic positioning pattern (ordered class groups, positioning tokens and inline styles), and visual styling lives in plain component CSS scoped with `@layer` and `@scope`.
 
 The project's agent instructions (e.g., `AGENTS.md`) normally name its theme token file, theme rules, and CSS entry point. Otherwise locate them, and ask if they are unclear or missing.
 
@@ -221,6 +221,6 @@ li.item:is(:hover, :focus-within) div.caption.__layout__ { grid-template-rows: m
 - Visual styling stays in plain rules that use theme tokens by role; `mono` stands for a project text utility in the last class group.
 
 ## Trigger examples
-- "Update this component markup to follow the semantic positioning class pattern."
+- "Update this component to follow semantic-first CSS."
 - "Move this panel's layout into the markup with positioning tokens and inline styles."
 - "Refactor this component to use plain class names and scoped selectors."

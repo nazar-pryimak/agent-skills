@@ -1,10 +1,12 @@
 ---
 name: semantic-positioning
-description: Apply the semantic positioning class pattern (ordered class groups, __layout__ hooks, positioning tokens) to component markup. Use when writing or reviewing frontend templates in a project that follows this pattern or asks for it.
+description: Apply the semantic positioning pattern to components (ordered class groups, positioning tokens and __layout__ hooks in the markup; plain class names and component CSS in @layer and @scope). Use when writing, reviewing or refactoring component markup and styles in a project that follows this pattern or asks for it.
 license: MIT
 ---
 
-Follow the semantic positioning pattern to make layout intent readable from the HTML. Use it together with `component-css`, which owns component CSS and naming.
+Follow the semantic positioning pattern: keep layout readable in the markup through ordered class groups, positioning tokens and inline styles, and keep visual styling in plain component CSS scoped with `@layer` and `@scope`.
+
+The project's agent instructions (e.g., `AGENTS.md`) normally name its theme token file, theme rules, and CSS entry point. Otherwise locate them, and ask if they are unclear or missing.
 
 ## Class order
 Keep class groups in this order and omit any group an element does not need:
@@ -63,6 +65,50 @@ Aliases behave exactly like their token. New markup uses the token; leave existi
 | `grid` | `gap`, `block-fix` |
 | `items-xy-center` | `items-center` |
 | `col` | `column` |
+
+## Scoping and naming
+- Use a unique root class per component and anchor `@scope` to it.
+- Reusing child class names across components is acceptable because `@scope` keeps a component's styles from reaching the rest of the page.
+- Styles intentionally reach nested child components, which is why component CSS is not scoped by the framework (see Framework notes). A child overrides a parent rule by declaring the same property with the same selector shape, because the closer scope wins a specificity tie.
+- Prefer plain, descriptive class names for internal elements (e.g., `inputs`, `input`, `close`).
+- Do not name classes after global utilities or positioning tokens (e.g., `empty`, `mono`, `center`). The `utilities` layer overrides `components` regardless of specificity, so component CSS cannot override what the utility sets.
+- BEM is optional; use it only when it improves clarity for a complex component.
+- Use `name--variant` modifiers for state or variants (e.g., `dirty-dot--interactive`).
+- Use a bare `--variant` only for a shared variant that a parent or shared rule reads (e.g., `__layout__ --wide` on panels).
+- Avoid project-wide prefixes for component classes; rely on the root scope instead.
+
+## Component CSS
+- Write component CSS as global CSS wrapped in `@layer components` and `@scope`, placed as the Framework notes describe.
+- Style the component root with `:scope`.
+- Prefer tag + class selectors to make targets obvious (e.g., `div.input`, `button.close`).
+- Keep selectors shallow so a child can still override them with the same selector shape.
+- Keep visual styling in component CSS. Layout belongs in the markup or in `__layout__` rules, as described under `__layout__`.
+
+## Theme tokens and CSS variables
+- Choose tokens from the project's theme token file by role, not by similar value, for colors, radii, shadows, and other shared values.
+- If no token's role matches, define one following the project's theme rules rather than hardcoding the value, apart from any exceptions those rules list.
+- If a component-local CSS variable would be used only once, write the value where it is used instead of defining a variable.
+- If a component-local value is reused, define the variable in the component CSS on the element it belongs to, then reference it with `var()` wherever needed, including inline styles.
+- Do not prefix CSS variables just to namespace them; only prefix when collision risk is real.
+
+## Shared micro-utilities
+- If a non-positioning utility is shared by several sibling components, define it once in a shared wrapper scope.
+- Allow per-component overrides when needed, but do not duplicate the base utility in each component.
+
+## Global CSS
+- Global CSS lives in cascade layers declared in the project's CSS entry point, with `components` before `utilities` (e.g., `@layer theme, base, framework, components, utilities, overrides;`).
+- Do not add unlayered global rules; put each rule in the layer it belongs to.
+
+## Framework notes
+Keep component CSS global, where the framework does not rewrite or isolate it:
+- Vue: a `<style>` block without `scoped`.
+- Astro: `<style is:global>`.
+- Svelte: a plain `.css` file imported as global CSS, since Svelte scopes `<style>` blocks.
+- React, Preact, Solid and similar: a plain `.css` file per component, imported as global CSS rather than a CSS Module. Classes go in `className`, and inline layout styles are style objects.
+- Angular: component styles with `encapsulation: ViewEncapsulation.None`.
+- Server templates and plain HTML: a `.css` file per partial or component.
+
+These conventions do not suit CSS Modules, CSS-in-JS or Shadow DOM components: generated class names and shadow boundaries break the root class, shared child names and rules that reach child components.
 
 ## Examples
 A central element with its grid template inline. Nothing overrides it, so it does not need `__layout__`:
@@ -177,3 +223,4 @@ li.item:is(:hover, :focus-within) div.caption.__layout__ { grid-template-rows: m
 ## Trigger examples
 - "Update this component markup to follow the semantic positioning class pattern."
 - "Move this panel's layout into the markup with positioning tokens and inline styles."
+- "Refactor this component to use plain class names and scoped selectors."
